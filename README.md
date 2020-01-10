@@ -69,7 +69,7 @@ echo "export PATH=\$PATH:\$JAVA_HOME/bin:\$HADOOP_HOME/bin" | sudo tee -a /etc/p
 
 ![edit_profile](images/edit-profile.png)
 
-Before editing, the end of */etc/profile* looks like
+Before editing, the end of ***/etc/profile*** looks like
 
 ![profile_tail_before](images/profile-tail-before.png)
 
