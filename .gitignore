@@ -1,21 +1,26 @@
-boot.php
-index.php
-install.php
-/config/*
-!/config/config.php
-/controllers/*
-/init/*
-/logs/*
-/phproad/*
-/temp/*
-/uploaded/*
-/installer_files/*
-/modules/backend/*
-/modules/blog/*
-/modules/cms/*
-/modules/core/*
-/modules/session/*
-/modules/shop/*
-/modules/system/*
-/modules/users/*
-# add content_*.php if you don't want erase client changes to content
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
