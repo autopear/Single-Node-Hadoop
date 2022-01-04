@@ -12,7 +12,7 @@ This tutorial contains detailed steps to set up a single node Hadoop cluster on 
 
 
 ### Install Java 8
-The latest Apache Hadoop version is 3.3.0. All Hadoop 3 builds require Java 8.
+The latest Apache Hadoop version is 3.3.1. All Hadoop 3 builds require Java 8.
 
 First you need to check if Java 8 is installed and if `JAVA_HOME` is set, by the following commands:
 
@@ -35,24 +35,37 @@ sudo apt install -y openjdk-8-jdk
 
 ![jdk8_install](images/jdk8-install.png)
 
-If you are using CentOS, Fedora or Red Hat, use the following commands instead:
+If you are using CentOS, Fedora or RedHat, use the following commands instead:
 
 ```bash
 sudo yum update
 sudo yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 ```
 
+Note, if you are using CentOS 8, Fedora 22 or RedHat 8, use the following `dnf` commands instead of `yum`:
+```bash
+sudo dnf upgrade
+sudo dnf -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
+```
+
 If you are using MacOS, you can download and install the latest JDK 8 (contains JRE 8) from <https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html>.
 
+Mac M1 may use third party JDK 8 like [azul](https://www.azul.com/downloads/?version=java-8-lts&os=macos&architecture=arm-64-bit&package=jdk) or [Miniforge](https://github.com/conda-forge/miniforge).
 
 ### Install Hadoop 3
 Use the following command to install Apache Hadoop 3 globally for all users. You can use a different location if you prefer.
 
 ```bash
-sudo wget -c http://mirror.metrocast.net/apache/hadoop/common/stable/hadoop-3.3.0.tar.gz -O - | sudo tar -xz -C /opt
+sudo wget -c https://dlcdn.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz -O - | sudo tar -xz -C /opt
 ```
 
-This will install the latest Apache Hadoop (currently 3.3.0) to ***/opt/***. You may find your fastest link to download from <https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz>.
+For aarch64 systems, like Linux ARM or Mac M1, use the following command instead:
+```bash
+sudo wget -c https://dlcdn.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1-aarch64.tar.gz -O - | sudo tar -xz -C /opt
+```
+
+
+This will install the latest Apache Hadoop (currently 3.3.1) to ***/opt/***. You may find your fastest link to download from [https://hadoop.apache.org/releases.html](https://hadoop.apache.org/releases.html).
 
 ![hadoop_install](images/hadoop-download.png)
 
@@ -63,7 +76,7 @@ After JDK 8, JRE 8 and Hadoop 3 are installed, run the following commands to set
 ```bash
 echo | sudo tee -a /etc/profile > /dev/null
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" | sudo tee -a /etc/profile > /dev/null
-echo "export HADOOP_HOME=/opt/hadoop-3.3.0" | sudo tee -a /etc/profile > /dev/null
+echo "export HADOOP_HOME=/opt/hadoop-3.3.1" | sudo tee -a /etc/profile > /dev/null
 echo "export PATH=\$PATH:\$JAVA_HOME/bin:\$HADOOP_HOME/bin" | sudo tee -a /etc/profile > /dev/null
 ```
 
@@ -79,10 +92,10 @@ After editing, the end looks like
 
 These commands make the following changes to ***/etc/profile***:
 - Set `JAVA_HOME` to ***/usr/lib/jvm/java-8-openjdk-amd64***. You may need to change this path if you are using a different system.
-- Set `HADOOP_HOME` to ***/opt/hadoop-3.3.0***. You may need to change this path if you are using a different Hadoop version, or installed it at a different location.
+- Set `HADOOP_HOME` to ***/opt/hadoop-3.3.1***. You may need to change this path if you are using a different Hadoop version, or installed it at a different location.
 - Add `$JAVA_HOME/bin` and `$HADOOP_HOME/bin` to `PATH` for the system to locate the executables of JAVA and Hadoop.
 
-If you just want to make these changes for the current user only, you can add the same contents to ***~/.profile*** or user related places.
+If you just want to make these changes for the current user only, you can add the same contents to ***~/.profile*** or user related places (e.g, ***~/.bashrc***, ***~/.bash_profile***, ***~/.zshrc*** or ***~/.zsh_profile***).
 
 To make these changes take effect, either run `source /etc/profile`, or restart the system.
 
@@ -118,7 +131,7 @@ mkdir input
 cp $HADOOP_HOME/etc/hadoop/*.xml input
 # Run MapReduce Grep example
 # Grep example extracts matching strings from text files and counts how many time they occured
-hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.0.jar grep input output 'dfs[a-z.]+'
+hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar grep input output 'dfs[a-z.]+'
 # Print the output contents
 cat output/*
 ```
